@@ -4,7 +4,6 @@ export default function Problems() {
     return (
         <div>
             <Header />
-
             Problems
         </div>
     );
