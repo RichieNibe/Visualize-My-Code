@@ -3,16 +3,22 @@
     "builds": [
         {
             "src": "backend/generate_backend.py",
-            "use": "@vercel/python",
-            "config": {
-                "maxLambdaSize": "15mb"
-            }
+            "use": "@vercel/python"
+        },
+        {
+            "src": "frontend/**",
+            "use": "@vercel/next"
+
         }
     ],
     "routes": [
         {
-            "src": "/(.*)",
+            "src": "/api/(.*)",
             "dest": "backend/generate_backend.py"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "frontend/$1"
         }
     ]
 }
