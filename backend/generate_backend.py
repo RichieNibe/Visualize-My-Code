@@ -40,3 +40,6 @@ async def run_code(request: CodeRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("backend.generate_backend:app", host="0.0.0.0", port=8000)
