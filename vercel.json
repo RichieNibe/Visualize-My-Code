@@ -8,6 +8,7 @@
         {
             "src": "frontend/**",
             "use": "@vercel/next"
+
         }
     ],
     "routes": [
