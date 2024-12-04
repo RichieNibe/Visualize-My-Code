@@ -1,0 +1,63 @@
+/* SetVisualizer.css */
+
+.set-container {
+    margin-bottom: 20px;
+}
+
+.set-grid {
+    display: flex;
+    flex-wrap: wrap;
+    border: 2px solid #ccc;
+    padding: 10px;
+    gap: 10px;
+    width: fit-content;
+    margin: auto;
+}
+
+.set-item {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 80px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+/* Animation for new items */
+@keyframes new-item {
+    0% {
+        background-color: #c3e6cb;
+        transform: scale(0.5);
+    }
+
+    100% {
+        background-color: #f0f0f0;
+        transform: scale(1);
+    }
+}
+
+.animate-new {
+    animation: new-item 2s ease-in-out;
+}
+
+/* Animation for removed items */
+@keyframes remove-item {
+    0% {
+        background-color: #f5c6cb;
+        transform: scale(1);
+    }
+
+    100% {
+        background-color: #f0f0f0;
+        opacity: 0;
+        transform: scale(0);
+        display: none;
+    }
+}
+
+.animate-remove {
+    animation: remove-item 2s ease-in-out;
+}

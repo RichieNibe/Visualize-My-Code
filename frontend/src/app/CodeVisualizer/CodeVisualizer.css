@@ -1,0 +1,31 @@
+/* Container to hold both code editor and visualizers */
+.container {
+    display: flex;
+    height: 100vh;
+    padding: 20px;
+    justify-content: space-between;
+}
+
+/* Left side: Code editor */
+.code-editor {
+    flex: 1;
+    padding-right: 20px;
+}
+
+/* Right side: Visualizers */
+.visualizers {
+    flex: 1;
+    border-left: 2px solid #ccc;
+    padding-left: 40px;
+    /* Increased padding to push content inward */
+    padding-right: 20px;
+    margin-left: 40px;
+    /* Add some margin to further push it towards the center */
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* Center content vertically */
+    align-items: center;
+    /* Center content horizontally */
+}

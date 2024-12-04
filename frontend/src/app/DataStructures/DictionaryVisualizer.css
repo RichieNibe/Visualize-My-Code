@@ -1,0 +1,59 @@
+/* Add slow-motion animation for new rows */
+@keyframes slow-motion {
+    0% {
+        background-color: #ffff99;
+        /* Highlight the new row */
+        opacity: 0;
+    }
+
+    100% {
+        background-color: white;
+        /* Fade back to white */
+        opacity: 1;
+    }
+}
+
+.animate-row {
+    animation: slow-motion 2s ease-in-out;
+}
+
+/* Animation for removing rows */
+@keyframes slow-fade-out {
+    0% {
+        background-color: #ff6666;
+        /* Highlight for removal */
+        opacity: 1;
+    }
+
+    100% {
+        background-color: white;
+        /* Fade back to white */
+        opacity: 0;
+        display: none;
+        /* Optionally hide row after animation */
+    }
+}
+
+.animate-remove {
+    animation: slow-fade-out 2s ease-in-out;
+}
+
+/* Make the table compact */
+.compact-table {
+    font-size: 12px;
+    width: 60%;
+    border-collapse: collapse;
+    margin: 10px 0;
+}
+
+.compact-table th,
+.compact-table td {
+    padding: 4px 8px;
+    border: 1px solid black;
+    text-align: left;
+}
+
+/* Reduce margins for dictionary container */
+.dictionary-container {
+    margin-bottom: 10px;
+}

@@ -1,7 +1,11 @@
+import Header from "../../components/Header/Header";
+import CodeVisualizer from "../../CodeVisualizer/CodeVisualizer";
 export default function Playground() {
+
     return (
         <div>
-            Playground
+            <Header />
+            <CodeVisualizer />
         </div>
     );
 }
