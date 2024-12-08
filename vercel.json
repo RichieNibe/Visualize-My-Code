@@ -4,16 +4,12 @@
         {
             "src": "frontend/package.json",
             "use": "@vercel/next"
-        },
-        {
-            "src": "backend/generate_backend.py",
-            "use": "@vercel/python"
         }
     ],
     "routes": [
         {
             "src": "/api/(.*)",
-            "dest": "backend/generate_backend.py"
+            "dest": "backend"
         },
         {
             "src": "/(.*)",
