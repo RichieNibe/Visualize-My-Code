@@ -38,7 +38,7 @@ const CodeVisualizer: React.FC = () => {
         setTrace(null);
 
         try {
-            const response = await axios.post("http://127.0.0.1:8000/run_code", { code });
+            const response = await axios.post("https://backend-visualize-my-code.onrender.com/run_code", { code });
             setTrace(response.data.trace);
         } catch (err) {
             setError("An error occurred during code execution.");
