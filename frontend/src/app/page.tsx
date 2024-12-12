@@ -1,6 +1,6 @@
 import Header from "./components/Header/Header";
 import Card from "./components/Card/Card";
-
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -20,12 +20,16 @@ export default function Home() {
         Practice Data Structures
       </div>
       <div className="card-container">
-        <Card label="Arrays" />
-        <Card label="LinkedList" />
-        <Card label="Stacks" />
-        <Card label="Queues" />
-        <Card label="Binary Search Trees" />
-        <Card label="Dictionaries" />
+        {/* <Card label="Arrays" /> */}
+        {/* <Card label="LinkedList" /> */}
+        <Link href="/pages/Stacks">
+          <Card label="Stacks" />
+        </Link>
+        {/* <Card label="Queues" />
+        <Card label="Binary Search Trees" /> */}
+        <Link href="/pages/Dictionaries">
+          <Card label="Dictionaries" />
+        </Link>
       </div>
     </div>
   );

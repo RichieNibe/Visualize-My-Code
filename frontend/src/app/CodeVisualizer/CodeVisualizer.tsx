@@ -25,8 +25,18 @@ interface HeapObjects {
     treeObjects: any[];
 }
 
-const CodeVisualizer: React.FC = () => {
-    const [code, setCode] = useState<string>("");
+interface CodeVisualizerProps {
+    defaultCode?: string; // Default code to initialize the editor
+    height?: string; // Height of the CodeMirror editor
+    onTraceComplete?: (trace: TraceStep[]) => void; // Callback after trace is complete
+}
+
+const CodeVisualizer: React.FC<CodeVisualizerProps> = ({
+    defaultCode = "print('Hello, World!')", // Default code as prop
+    height = "400px", // Default height
+    onTraceComplete = () => { } // Default callback (no-op)
+}) => {
+    const [code, setCode] = useState<string>(defaultCode); // Use defaultCode prop as initial value
     const [trace, setTrace] = useState<TraceStep[] | null>(null);
     const [currentStep, setCurrentStep] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>(false);
@@ -46,6 +56,9 @@ const CodeVisualizer: React.FC = () => {
         try {
             const response = await axios.post("https://backend-visualize-my-code.onrender.com/run_code", { code });
             setTrace(response.data.trace);
+            if (onTraceComplete) {
+                onTraceComplete(response.data.trace); // Call the onTraceComplete callback
+            }
         } catch (err) {
             setError("An error occurred during code execution.");
             console.error("Error submitting code:", err);
@@ -101,7 +114,7 @@ const CodeVisualizer: React.FC = () => {
                 <form onSubmit={handleSubmit}>
                     <CodeMirror
                         value={code}
-                        height="400px"
+                        height={height}
                         extensions={[python()]}
                         onChange={handleCodeChange}
                         theme="light"
