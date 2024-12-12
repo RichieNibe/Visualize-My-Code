@@ -21,11 +21,11 @@ export default function Navbar() {
                     <Link href="/pages/Playground" style={{ fontFamily: 'sans-serif', fontWeight: 'bold' }}>Playground</Link>
                     <Link href="/pages/Problems" style={{ fontFamily: 'sans-serif', fontWeight: 'bold' }}>Problems</Link>
                 </ul>
-                <Link href="/signin">
+                {/* <Link href="/signin">
                     <div className="button-container">
                         <button className="button" >Sign in</button>
                     </div>
-                </Link>
+                </Link> */}
             </div>
         </header >
     );

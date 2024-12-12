@@ -1,11 +1,17 @@
+// @refresh reset
 "use client";
-import React, { useState, ChangeEvent, FormEvent } from "react";
+
+import React, { useState, FormEvent } from "react";
 import axios from "axios";
+import dynamic from 'next/dynamic';
+import { python } from '@codemirror/lang-python';
 import ListVisualizer from "../DataStructures/ListVisualizer";
 import SetVisualizer from "../DataStructures/SetVisualizer";
 import DictVisualizer from "../DataStructures/DictionaryVisualizer";
 // import TreeVisualizer from "./TreesVisualizer";
 import "./CodeVisualizer.css";
+
+const CodeMirror = dynamic(() => import('@uiw/react-codemirror'), { ssr: false });
 
 interface TraceStep {
     heap: Record<string, any>;
@@ -26,8 +32,8 @@ const CodeVisualizer: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
-    const handleCodeChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-        setCode(event.target.value);
+    const handleCodeChange = (value: string) => {
+        setCode(value);
     };
 
     const handleSubmit = async (event: FormEvent) => {
@@ -54,7 +60,7 @@ const CodeVisualizer: React.FC = () => {
         }
     };
 
-    const handleStepChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const handleStepChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setCurrentStep(Number(event.target.value));
     };
 
@@ -91,19 +97,18 @@ const CodeVisualizer: React.FC = () => {
     return (
         <div className="container">
             <div className="code-editor">
-                <h1>Python Code Visualizer</h1>
+                <h1>Code Visualizer</h1>
                 <form onSubmit={handleSubmit}>
-                    <textarea
+                    <CodeMirror
                         value={code}
+                        height="400px"
+                        extensions={[python()]}
                         onChange={handleCodeChange}
-                        placeholder="Type your Python code here..."
-                        rows={10}
-                        cols={50}
-                        disabled={loading}
+                        theme="light"
                     />
                     <br />
                     <button type="submit" disabled={loading}>
-                        {loading ? "Executing..." : "Visualize Execution"}
+                        {loading ? "Executing..." : <button className="button" >Visualize</button>}
                     </button>
                 </form>
 
@@ -126,7 +131,7 @@ const CodeVisualizer: React.FC = () => {
                             onClick={handleNextStep}
                             disabled={currentStep >= trace.length - 1}
                         >
-                            {currentStep < trace.length - 1 ? "Next Step" : "No More Steps"}
+                            {currentStep < trace.length - 1 ? <button className="button" >Next Step</button> : "No More Steps"}
                         </button>
                     </div>
                 )}
