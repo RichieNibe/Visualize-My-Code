@@ -31,9 +31,45 @@
     justify-content: center;
     transition: background-color 0.3s ease;
     margin: 0 auto;
+    position: relative;
+    /* Required to position pointer indicator */
 }
 
-/* Same animations as before for new and removed items */
+/* 🔥 New: Reverse Animation */
+@keyframes reverse-scale {
+    0% {
+        transform: scale(0.8);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.reverse-animate {
+    animation: reverse-scale 0.6s ease-in-out;
+}
+
+/* 🔹 New: Pointer Indicator */
+.pointer {
+    background-color: #4caf50 !important;
+    /* Highlight current pointer position */
+    color: #158aff;
+}
+
+.pointer-indicator {
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 20px;
+}
+
+/* 🔄 New Item Animation */
 @keyframes new-item {
     0% {
         background-color: #c3e6cb;
@@ -50,6 +86,7 @@
     animation: new-item 2s ease-in-out;
 }
 
+/* ❌ Remove Item Animation */
 @keyframes remove-item {
     0% {
         background-color: #f5c6cb;

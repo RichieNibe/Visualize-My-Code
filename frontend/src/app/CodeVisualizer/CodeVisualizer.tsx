@@ -49,7 +49,7 @@ const CodeVisualizer: React.FC<CodeVisualizerProps> = ({
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
         setLoading(true);
-        setCurrentStep(0);
+        setCurrentStep(() => 0);
         setError(null);
         setTrace(null);
 
@@ -120,9 +120,9 @@ const CodeVisualizer: React.FC<CodeVisualizerProps> = ({
                         theme="light"
                     />
                     <br />
-                    <button type="submit" disabled={loading}>
+                    <span>
                         {loading ? "Executing..." : <button className="button" >Visualize</button>}
-                    </button>
+                    </span>
                 </form>
 
                 {error && <div style={{ color: "red" }}>{error}</div>}
@@ -134,18 +134,17 @@ const CodeVisualizer: React.FC<CodeVisualizerProps> = ({
                         </h2>
                         <input
                             type="range"
-                            min="0"
+                            min={0}
                             max={trace.length - 1}
                             value={currentStep}
                             onChange={handleStepChange}
                         />
                         <p>Current Step: {currentStep + 1}</p>
-                        <button
+                        <span
                             onClick={handleNextStep}
-                            disabled={currentStep >= trace.length - 1}
                         >
                             {currentStep < trace.length - 1 ? <button className="button" >Next Step</button> : "No More Steps"}
-                        </button>
+                        </span>
                     </div>
                 )}
             </div>

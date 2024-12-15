@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useTrackChanges } from "../useTrackState";
 import "./ListVisualizer.css";
 
@@ -7,11 +7,29 @@ interface ListVisualizerProps {
 }
 
 const ListVisualizer: React.FC<ListVisualizerProps> = ({ list }) => {
-    const {
-        trackedItems: trackedLists,
-        newItems,
-        removedItems,
-    } = useTrackChanges(list, "ARRAY");
+    const { trackedItems: trackedLists, newItems, removedItems } = useTrackChanges(list, "ARRAY");
+
+    const [currentPointer, setCurrentPointer] = useState<number | null>(null);
+
+    useEffect(() => {
+        let pointerInterval: NodeJS.Timeout | null = null; // ✅ Explicit type
+
+        if (trackedLists.length > 0) {
+            let pointerIndex = 0;
+            pointerInterval = setInterval(() => {
+                setCurrentPointer(pointerIndex);
+                pointerIndex++;
+                if (pointerIndex >= trackedLists[0].length) {
+                    clearInterval(pointerInterval!); // ✅ Non-null assertion
+                    setCurrentPointer(null); // Remove pointer after finishing loop
+                }
+            }, 500); // Pointer speed (500ms delay)
+        }
+
+        return () => {
+            if (pointerInterval) clearInterval(pointerInterval);
+        };
+    }, [trackedLists]);
 
     return (
         <div className="list-visualizer">
@@ -22,24 +40,25 @@ const ListVisualizer: React.FC<ListVisualizerProps> = ({ list }) => {
                     <div className="list-grid stack-container">
                         {sublist.slice().reverse().map((item: string, index: number) => {
                             const originalIndex = sublist.length - 1 - index;
+                            const isNewItem = newItems.some(
+                                (newItem) => newItem.item === item && newItem.position === originalIndex
+                            );
+                            const isRemovedItem = removedItems.some(
+                                (removedItem) => removedItem.item === item && removedItem.position === originalIndex
+                            );
+                            const isPointerHere = currentPointer === originalIndex;
+
                             return (
                                 <div
                                     key={index}
-                                    className={`list-item ${newItems.some(
-                                        (newItem) =>
-                                            newItem.item === item && newItem.position === originalIndex
-                                    )
-                                        ? "animate-new"
-                                        : removedItems.some(
-                                            (removedItem) =>
-                                                removedItem.item === item &&
-                                                removedItem.position === originalIndex
-                                        )
-                                            ? "animate-remove"
-                                            : ""
-                                        }`}
+                                    className={`list-item 
+                                        ${isNewItem ? "animate-new" : ""} 
+                                        ${isRemovedItem ? "animate-remove" : ""} 
+                                        ${isPointerHere ? "pointer" : ""} 
+                                        reverse-animate`}
                                 >
                                     {item}
+                                    {isPointerHere && <div className="pointer-indicator">🔹</div>}
                                 </div>
                             );
                         })}
